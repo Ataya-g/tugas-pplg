@@ -1,41 +1,89 @@
-# Prerequisites
-*.d
+#include <iostream>
+#include <string> // Ditambahkan untuk fungsi string yang lebih stabil
 
-# Compiled Object files
-*.slo
-*.lo
-*.o
-*.obj
+using namespace std;
 
-# Precompiled Headers
-*.gch
-*.pch
+class Tabungan { // Menggunakan huruf kapital di awal (best practice)
+public:
+    string nama;
+    int saldo = 0; // Inisialisasi saldo agar tidak mulai dari angka acak
 
-# Linker files
-*.ilk
+    void inputData() {
+        cout << "Nama siswa: ";
+        getline(cin >> ws, nama);
+    }
 
-# Debugger Files
-*.pdb
+    void tampil() {
+        cout << "\n===================" << endl;
+        cout << "Nama siswa: " << nama << endl;
+        cout << "Saldo saat ini: Rp. " << saldo << endl;
+        cout << "====================" << endl;
+    }
 
-# Compiled Dynamic libraries
-*.so
-*.dylib
-*.dll
+    void setor(int jumlah) {
+        if (jumlah > 0) {
+            saldo += jumlah;
+            cout << "Berhasil setor: Rp. " << jumlah << endl;
+        } else {
+            cout << "Jumlah setor harus positif!" << endl;
+        }
+    }
 
-# Fortran module files
-*.mod
-*.smod
+    void tarik(int jumlah) {
+        if (jumlah > saldo) {
+            cout << "Saldo tidak cukup (Saldo Anda: Rp. " << saldo << ")" << endl;
+        } else if (jumlah <= 0) {
+            cout << "Jumlah tarik tidak valid!" << endl;
+        } else {
+            saldo -= jumlah;
+            cout << "Berhasil tarik: Rp. " << jumlah << endl;
+        }
+    }
+};
 
-# Compiled Static libraries
-*.lai
-*.la
-*.a
-*.lib
+int main() {
+    Tabungan t; // Nama class disesuaikan
+    int pilih, jumlah;
 
-# Executables
-*.exe
-*.out
-*.app
+    t.inputData();
 
-# debug information files
-*.dwo
+    do {
+        cout << "\n=== Menu Tabungan ===" << endl;
+        cout << "1. Lihat Tabungan" << endl;
+        cout << "2. Setor" << endl;
+        cout << "3. Tarik" << endl;
+        cout << "4. Keluar" << endl;
+        cout << "Pilih Menu: ";
+
+        // Memperbaiki logika input agar tidak double
+        if (!(cin >> pilih)) {
+            cout << "Input harus berupa angka!" << endl;
+            cin.clear(); // Menghapus state error
+            cin.ignore(1000, '\n'); // Mengabaikan input yang salah
+            continue;
+        }
+
+        switch (pilih) {
+        case 1:
+            t.tampil();
+            break;
+        case 2:
+            cout << "Masukkan jumlah setor: ";
+            cin >> jumlah;
+            t.setor(jumlah);
+            break;
+        case 3:
+            cout << "Masukkan jumlah tarik: ";
+            cin >> jumlah;
+            t.tarik(jumlah);
+            break;
+        case 4:
+            cout << "Terima Kasih Telah Menggunakan Platform Kami!!!" << endl;
+            break;
+        default:
+            cout << "Menu tidak tersedia!" << endl;
+        }
+    } while (pilih != 4);
+
+    return 0;
+}
