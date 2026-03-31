@@ -1,12 +1,13 @@
 #include <iostream>
-#include <string> // Ditambahkan untuk fungsi string yang lebih stabil
+#include <string>
 
 using namespace std;
 
-class Tabungan { // Menggunakan huruf kapital di awal (best practice)
+class Tabungan {
 public:
     string nama;
-    int saldo = 0; // Inisialisasi saldo agar tidak mulai dari angka acak
+    int saldo = 0;
+
 
     void inputData() {
         cout << "Nama siswa: ";
